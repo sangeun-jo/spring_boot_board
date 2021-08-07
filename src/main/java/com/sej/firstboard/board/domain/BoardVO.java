@@ -3,7 +3,6 @@ package com.sej.firstboard.board.domain;
 import java.util.Date;
  
 public class BoardVO {
-
     private int bno;
     private String subject;
     private String content;
