@@ -32,7 +32,9 @@ public class BoardController {
     
     @RequestMapping("/detail/{bno}")
     private String boardDetail(@PathVariable int bno, Model model) throws Exception {
+        System.out.println("detail에서 찾음: " + (bno * 10 - 5)); 
         BoardVO board = mBoardService.boardDetailService(bno * 10 - 5); 
+        board.setBno(bno);
         model.addAttribute("detail", board); 
         return "detail"; 
     }
@@ -59,20 +61,27 @@ public class BoardController {
     //게시글 수정폼 
     @RequestMapping("/update/{bno}")
     private String boardUpdateForm(@PathVariable int bno, Model model) throws Exception {
-        model.addAttribute("detail", mBoardService.boardDetailService(bno)); 
+        System.out.println("update에서 찾음: " + (bno * 10 - 5)); 
+        model.addAttribute("detail", mBoardService.boardDetailService(bno * 10 - 5)); 
         return "update"; 
     }
 
     @RequestMapping("/updateProc")
-    private void boardUpdateProc(HttpServletRequest request) throws Exception {
-        BoardVO board = (BoardVO) request.getParameterMap(); 
+    private String boardUpdateProc(HttpServletRequest request) throws Exception {
+        BoardVO board = new BoardVO();
+        int bno = Integer.parseInt(request.getParameter("bno")); 
+        board.setBno(bno * 10 - 5);
+        board.setSubject(request.getParameter("subject"));
+        board.setContent(request.getParameter("content"));
+        System.out.println("/updateProc에서 업데이트: " + (bno * 10 - 5)); 
         mBoardService.boardUpdateService(board); 
+        return "redirect:/detail/" + bno; 
     }
 
     //게시글 삭제 
     @RequestMapping("/delete/{bno}")
     private String boardDelete(@PathVariable int bno) throws Exception{
-        mBoardService.boardDeleteService(bno); 
+        mBoardService.boardDeleteService(bno * 10 - 5); 
         return "redirect:/list"; 
     }
 

@@ -26,14 +26,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="subject != null">
                 SUBJECT = #{subject}
             </if>
-            <if test="subject = null and content != null"> , </if>
+            <if test="subject != null and content != null"> , </if>
             <if test="content != null">
                 CONTENT = #{content}
             </if>
             WHERE BNO = #{bno}
     </update>
 
-    <delete id="boardDelet" parameterType="int">
+    <delete id="boardDelete" parameterType="int">
         DELETE FROM BOARD WHERE BNO = #{bno} 
     </delete>
 
