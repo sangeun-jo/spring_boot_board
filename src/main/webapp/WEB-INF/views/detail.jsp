@@ -32,7 +32,7 @@
         <label>내용</label>
         <p>${detail.content}</p>
       </div>
-      <button class="btn btn-primary"  onclick="location.href='http://localhost:8080/list'">목록</button>
+      <button class="btn btn-primary"  onclick="location.href='/list'">목록</button>
 </div>
  
  
