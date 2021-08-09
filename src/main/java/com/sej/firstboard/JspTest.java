@@ -9,7 +9,6 @@ import com.sej.firstboard.board.mapper.BoardMapper;
 
 @Controller
 public class JspTest {
-
     @Resource(name="com.sej.firstboard.board.mapper.BoardMapper")
     BoardMapper mBoardMapper; 
 
