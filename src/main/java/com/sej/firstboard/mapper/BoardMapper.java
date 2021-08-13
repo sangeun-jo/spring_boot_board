@@ -4,7 +4,8 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-import com.sej.firstboard.model.BoardVO; 
+import com.sej.firstboard.model.BoardVO;
+import com.sej.firstboard.model.FileVO; 
 
 
 @Repository("com.sej.firstboard.mapper.BoardMapper") // 데이터 베이스에 접근하는 인터페이스
@@ -20,6 +21,9 @@ public interface BoardMapper {
 
     //게시글 작성
     public void boardInsert(BoardVO board) throws Exception; 
+
+    //파일 추가
+    public int fileInsert(FileVO file) throws Exception; 
 
     //게시글 수정
     public void boardUpdate(BoardVO board) throws Exception; 

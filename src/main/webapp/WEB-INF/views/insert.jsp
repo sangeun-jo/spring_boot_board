@@ -17,7 +17,7 @@
     </div>
     
     <div class="col-xs-12">
-        <form action="/insertProc" method="post" enctype="multipart/form-data"> <!-- 추가 -->
+        <form action="/insertProc" method="post" enctype="multipart/form-data"> 
           <div class="form-group">
             <label for="subject">제목</label>
             <input type="text" class="form-control" id="subject" name="subject" placeholder="제목을 입력하세요.">

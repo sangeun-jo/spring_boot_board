@@ -20,6 +20,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         INSERT INTO BOARD (BNO, SUBJECT, CONTENT, WRITER, REG_DATE) 
         VALUES(#{bno}, #{subject}, #{content}, #{writer}, now())
     </insert>
+
+    <insert id="fileInsert" parameterType="com.sej.firstboard.model.FileVO">
+        INSERT INTO FILES (FNO, BNO, FILENAME, FILEORINAME, FILEURL) VALUES (#{fno}, #{bno}, #{fileName}, #{fileOriName}, #{fileUrl})
+    </insert>
     
     <update id="boardUpdate" parameterType="com.sej.firstboard.model.BoardVO">
         UPDATE BOARD SET 

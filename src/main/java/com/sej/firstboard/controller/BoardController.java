@@ -1,15 +1,22 @@
 package com.sej.firstboard.controller;
 
+import java.io.File;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 import com.sej.firstboard.model.BoardVO;
+import com.sej.firstboard.model.FileVO;
 import com.sej.firstboard.service.BoardService;
 
+import org.apache.commons.io.FilenameUtils;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.multipart.MultipartFile;
 
 @Controller 
 public class BoardController {
@@ -19,6 +26,7 @@ public class BoardController {
     //게시판 리스트 화면 호출 
     @RequestMapping("/") 
     private String boardList(Model model) throws Exception{
+
         model.addAttribute("list", mBoardService.boardListService()); 
         return "list"; 
     }
@@ -36,15 +44,43 @@ public class BoardController {
     }
 
     @RequestMapping("/insertProc")
-    private String boardInsertProc(HttpServletRequest request) throws Exception {
-        BoardVO board = new BoardVO(); 
+    private String boardInsertProc(HttpServletRequest request, @RequestPart MultipartFile files) throws Exception {
+        BoardVO board = new BoardVO();
+        FileVO file = new FileVO();  
 
         board.setSubject(request.getParameter("subject"));
         board.setContent(request.getParameter("content")); 
         board.setWriter(request.getParameter("writer"));
 
-        mBoardService.boardInsertService(board); 
+        if (files.isEmpty()) { //업로드할 파일 없음
+            mBoardService.boardInsertService(board);
+        } else {
+            String fileName = files.getOriginalFilename(); 
+            String fileNameExtension = FilenameUtils.getExtension(fileName).toLowerCase();
+            File destinationFile; 
+            String destinationFileName;  
+            String fileUrl = request.getServletContext().getRealPath("/uploadFiles/"); 
 
+            do {
+                destinationFileName = RandomStringUtils.randomAlphabetic(32) + "." + fileNameExtension; 
+                destinationFile = new File(fileUrl + destinationFileName); 
+            } while (destinationFile.exists()); 
+    
+            destinationFile.getParentFile().mkdirs();
+            files.transferTo(destinationFile);
+
+            mBoardService.boardInsertService(board);
+
+            file.setBno(board.getBno());
+            file.setFileName(destinationFileName);
+            file.setFileOriName(fileName);
+            file.setFileUrl(fileUrl);
+            
+            mBoardService.fileInsertServcie(file); 
+
+           
+    
+        }
         return "redirect:/"; 
     }
 

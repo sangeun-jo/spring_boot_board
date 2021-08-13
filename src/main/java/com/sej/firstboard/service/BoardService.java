@@ -6,6 +6,7 @@ import javax.annotation.Resource;
 
 import com.sej.firstboard.mapper.BoardMapper;
 import com.sej.firstboard.model.BoardVO;
+import com.sej.firstboard.model.FileVO;
 
 import org.springframework.stereotype.Service;
 
@@ -24,6 +25,10 @@ public class BoardService {
 
     public void boardInsertService(BoardVO board) throws Exception {
         mBoardMapper.boardInsert(board);
+    }
+
+    public int fileInsertServcie(FileVO file) throws Exception {
+        return mBoardMapper.fileInsert(file); 
     }
 
     public void boardUpdateService(BoardVO board) throws Exception {
