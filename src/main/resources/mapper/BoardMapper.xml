@@ -8,20 +8,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         SELECT COUNT(*) FROM BOARD 
     </select>
 
-    <select id="boardList" resultType="com.sej.firstboard.domain.BoardVO">
+    <select id="boardList" resultType="com.sej.firstboard.model.BoardVO">
         SELECT * FROM BOARD
     </select>
 
-    <select id="boardDetail" parameterType="int" resultType="com.sej.firstboard.domain.BoardVO">
+    <select id="boardDetail" parameterType="int" resultType="com.sej.firstboard.model.BoardVO">
         SELECT * FROM BOARD WHERE BNO = #{bno}
     </select>
 
-    <insert id="boardInsert" parameterType="com.sej.firstboard.domain.BoardVO" useGeneratedKeys="true" keyProperty="bno">
+    <insert id="boardInsert" parameterType="com.sej.firstboard.model.BoardVO" useGeneratedKeys="true" keyProperty="bno">
         INSERT INTO BOARD (BNO, SUBJECT, CONTENT, WRITER, REG_DATE) 
         VALUES(#{bno}, #{subject}, #{content}, #{writer}, now())
     </insert>
     
-    <update id="boardUpdate" parameterType="com.sej.firstboard.domain.BoardVO">
+    <update id="boardUpdate" parameterType="com.sej.firstboard.model.BoardVO">
         UPDATE BOARD SET 
             <if test="subject != null">
                 SUBJECT = #{subject}

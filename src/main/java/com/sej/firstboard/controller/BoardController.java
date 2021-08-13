@@ -1,11 +1,9 @@
 package com.sej.firstboard.controller;
 
-import java.util.List;
-
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
-import com.sej.firstboard.domain.BoardVO;
+import com.sej.firstboard.model.BoardVO;
 import com.sej.firstboard.service.BoardService;
 
 import org.springframework.stereotype.Controller;
@@ -19,7 +17,7 @@ public class BoardController {
     BoardService mBoardService; 
 
     //게시판 리스트 화면 호출 
-    @RequestMapping("/list") 
+    @RequestMapping("/") 
     private String boardList(Model model) throws Exception{
         model.addAttribute("list", mBoardService.boardListService()); 
         return "list"; 
@@ -47,7 +45,7 @@ public class BoardController {
 
         mBoardService.boardInsertService(board); 
 
-        return "redirect:/list"; 
+        return "redirect:/"; 
     }
 
     //게시글 수정폼 
@@ -75,7 +73,7 @@ public class BoardController {
     @RequestMapping("/delete/{bno}")
     private String boardDelete(@PathVariable int bno) throws Exception{
         mBoardService.boardDeleteService(bno); 
-        return "redirect:/list"; 
+        return "redirect:/"; 
     }
 
 }

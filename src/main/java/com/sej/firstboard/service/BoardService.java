@@ -4,8 +4,8 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
-import com.sej.firstboard.domain.BoardVO;
 import com.sej.firstboard.mapper.BoardMapper;
+import com.sej.firstboard.model.BoardVO;
 
 import org.springframework.stereotype.Service;
 

@@ -2,8 +2,9 @@ package com.sej.firstboard.mapper;
 
 import org.springframework.stereotype.Repository;
 
-import java.util.List; 
-import com.sej.firstboard.domain.BoardVO; 
+import java.util.List;
+
+import com.sej.firstboard.model.BoardVO; 
 
 
 @Repository("com.sej.firstboard.mapper.BoardMapper") // 데이터 베이스에 접근하는 인터페이스

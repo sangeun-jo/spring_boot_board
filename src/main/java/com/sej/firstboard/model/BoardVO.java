@@ -1,4 +1,4 @@
-package com.sej.firstboard.domain;
+package com.sej.firstboard.model;
  
 import java.util.Date;
  
