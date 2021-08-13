@@ -16,6 +16,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         SELECT * FROM BOARD WHERE BNO = #{bno}
     </select>
 
+    <select id="fileDetail" parameterType="int" resultType="com.sej.firstboard.model.FileVO">
+        SELECT * FROM FILES WHERE BNO = #{bno}
+    </select>
+
     <insert id="boardInsert" parameterType="com.sej.firstboard.model.BoardVO" useGeneratedKeys="true" keyProperty="bno">
         INSERT INTO BOARD (BNO, SUBJECT, CONTENT, WRITER, REG_DATE) 
         VALUES(#{bno}, #{subject}, #{content}, #{writer}, now())

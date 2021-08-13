@@ -17,7 +17,7 @@ public class FileVO {
     }
 
     public void setBno(int bno) {
-        this.fno = bno; 
+        this.bno = bno; 
     }
 
     public int getBno() {
@@ -43,7 +43,7 @@ public class FileVO {
         this.fileUrl = fileUrl; 
     }
 
-    public String getFIleUrl() {
+    public String getFileUrl() {
         return fileUrl; 
     }
     

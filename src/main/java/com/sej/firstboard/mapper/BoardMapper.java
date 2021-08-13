@@ -25,6 +25,9 @@ public interface BoardMapper {
     //파일 추가
     public int fileInsert(FileVO file) throws Exception; 
 
+    //파일 상세
+    public FileVO fileDetail(int bno) throws Exception;
+
     //게시글 수정
     public void boardUpdate(BoardVO board) throws Exception; 
 

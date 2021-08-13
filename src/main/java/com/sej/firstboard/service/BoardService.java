@@ -23,6 +23,10 @@ public class BoardService {
         return mBoardMapper.boardDetail(bno); 
     }
 
+    public FileVO fileDetailService(int bno) throws Exception{
+        return mBoardMapper.fileDetail(bno);
+    }
+    
     public void boardInsertService(BoardVO board) throws Exception {
         mBoardMapper.boardInsert(board);
     }
