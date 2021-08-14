@@ -45,4 +45,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         DELETE FROM BOARD WHERE BNO = #{bno} 
     </delete>
 
+    <delete id="fileDelete" parameterType="int">
+        DELETE FROM FILES WHERE BNO = #{bno} 
+    </delete>
+
 </mapper>

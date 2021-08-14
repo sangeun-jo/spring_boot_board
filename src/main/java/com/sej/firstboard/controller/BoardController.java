@@ -113,7 +113,6 @@ public class BoardController {
     }
 
 
-
     //게시글 작성폼 호출 
     @RequestMapping("/insert") 
     private String boardInsertForm() {
@@ -155,6 +154,7 @@ public class BoardController {
             
             mBoardService.fileInsertServcie(file); 
         }
+
         return "redirect:/detail/" + board.getBno(); 
     }
 
@@ -162,12 +162,13 @@ public class BoardController {
     @RequestMapping("/update/{bno}")
     private String boardUpdateForm(@PathVariable int bno, Model model) throws Exception { 
         model.addAttribute("detail", mBoardService.boardDetailService(bno)); 
+        model.addAttribute("files", mBoardService.fileDetailService(bno));
         return "update"; 
     }
 
     @RequestMapping("/updateProc")
     private String boardUpdateProc(HttpServletRequest request) throws Exception {
-        BoardVO board = new BoardVO();
+        BoardVO board = new BoardVO(); 
 
         int bno = Integer.parseInt(request.getParameter("bno")); 
 
@@ -176,6 +177,7 @@ public class BoardController {
         board.setContent(request.getParameter("content"));
 
         mBoardService.boardUpdateService(board); 
+        
         return "redirect:/detail/" + bno; 
     }
 
@@ -183,6 +185,21 @@ public class BoardController {
     @RequestMapping("/delete/{bno}")
     private String boardDelete(@PathVariable int bno) throws Exception{
         mBoardService.boardDeleteService(bno); 
+        
+        FileVO fileDetail = mBoardService.fileDetailService(bno); 
+        File file = new File(fileDetail.getFileUrl() + fileDetail.getFileName());
+        if(file.exists()) {
+            if (file.delete()) {
+                System.out.println(fileDetail.getFileName() + " 파일 삭제 성공");
+            } else {
+                System.out.println(fileDetail.getFileName() + " 파일 삭제 실패"); 
+            }
+        } else {
+            System.out.println(fileDetail.getFileName() + " 파일이 존재하지 않음"); 
+        }
+        
+        mBoardService.fileDeleteService(bno); 
+        
         return "redirect:/"; 
     }
 

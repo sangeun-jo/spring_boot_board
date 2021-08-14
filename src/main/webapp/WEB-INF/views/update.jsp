@@ -2,6 +2,8 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="layoutTag" tagdir="/WEB-INF/tags"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+
 <layoutTag:layout>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -17,11 +19,26 @@
     </div>
  
     <div class="col-xs-12">
-        <form action="/updateProc" method="post">
+        <form action="/updateProc" method="post" enctype="multipart/form-data">
           <div class="form-group">
             <label for="subject">제목</label>
             <input type="text" class="form-control" id="subject" name="subject" value="${detail.subject}">
           </div>
+          <div class="form-group">
+            <label for="writer">작성자</label>
+            <input type="text" class="form-control" id="writer" name="writer" placeholder="내용을 입력하세요.">
+          </div>
+
+          <div class="form-group">
+            <label for="writer">작성날짜</label><br>
+            <fmt:formatDate value="${detail.reg_date}" pattern="yyyy.MM.dd HH:mm:ss"/>
+          </div>
+
+          <div class="form-group">
+            <label for="file">첨부파일</label><br>
+            <a href="/fileDown/${files.bno}">${files.fileOriName}</a>
+          </div>
+
           <div class="form-group">
             <label for="content">내용</label>
             <textarea class="form-control" id="content" name="content" rows="3">${detail.content}</textarea>

@@ -42,4 +42,8 @@ public class BoardService {
     public void boardDeleteService(int bno) throws Exception {
         mBoardMapper.boardDelete(bno); 
     }
+
+    public void fileDeleteService(int bno) throws Exception {
+        mBoardMapper.fileDelete(bno); 
+    }
 }

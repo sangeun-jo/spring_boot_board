@@ -34,4 +34,7 @@ public interface BoardMapper {
     //게시글 삭제
     public void boardDelete(int bno) throws Exception; 
 
+    //파일 삭제
+    public void fileDelete(int bno) throws Exception; 
+
 }
