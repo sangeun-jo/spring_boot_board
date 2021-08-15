@@ -25,8 +25,8 @@
             <input type="text" class="form-control" id="subject" name="subject" value="${detail.subject}">
           </div>
           <div class="form-group">
-            <label for="writer">작성자</label>
-            <input type="text" class="form-control" id="writer" name="writer" placeholder="내용을 입력하세요.">
+            <label for="writer">작성자</label><br>
+            ${detail.writer}
           </div>
 
           <div class="form-group">

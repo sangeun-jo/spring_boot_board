@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.List;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -13,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.sej.firstboard.model.BoardVO;
 import com.sej.firstboard.model.FileVO;
 import com.sej.firstboard.service.BoardService;
+import com.sej.firstboard.service.CommentService;
 
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.RandomStringUtils;
@@ -27,6 +29,9 @@ import org.springframework.web.multipart.MultipartFile;
 public class BoardController {
     @Resource(name="com.sej.firstboard.service.BoardService")
     BoardService mBoardService; 
+
+    @Resource(name="com.sej.firstboard.service.CommentService")
+    CommentService mCommentService; 
 
     //게시판 리스트 화면 호출 
     @RequestMapping("/") 
@@ -184,22 +189,20 @@ public class BoardController {
     //게시글 삭제 
     @RequestMapping("/delete/{bno}")
     private String boardDelete(@PathVariable int bno) throws Exception{
+        
+        //파일 삭제 
+        FileVO fileDetail = mBoardService.fileDetailService(bno); 
+        if (fileDetail != null) { //파일이 존재 
+            File file = new File(fileDetail.getFileUrl() + fileDetail.getFileName());
+            file.delete();  //서버 파일 삭제 
+            mBoardService.fileDeleteService(bno); //db 파일 삭제 
+        } 
+        
+        //글 삭제 
         mBoardService.boardDeleteService(bno); 
         
-        FileVO fileDetail = mBoardService.fileDetailService(bno); 
-        File file = new File(fileDetail.getFileUrl() + fileDetail.getFileName());
-        if(file.exists()) {
-            if (file.delete()) {
-                System.out.println(fileDetail.getFileName() + " 파일 삭제 성공");
-            } else {
-                System.out.println(fileDetail.getFileName() + " 파일 삭제 실패"); 
-            }
-        } else {
-            System.out.println(fileDetail.getFileName() + " 파일이 존재하지 않음"); 
-        }
-        
-        mBoardService.fileDeleteService(bno); 
-        
+        //댓글 삭제 
+        mCommentService.commentsDeleteService(bno); 
         return "redirect:/"; 
     }
 

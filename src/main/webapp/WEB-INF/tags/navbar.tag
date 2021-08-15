@@ -11,7 +11,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="#">스프링부트로 게시판 만들기!!</a>
+      <a class="navbar-brand" href="#">스프링부트로 게시판 만들기</a>
     </div>
  
     <!-- Collect the nav links, forms, and other content for toggling -->
