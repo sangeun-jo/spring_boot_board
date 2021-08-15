@@ -27,23 +27,23 @@ public class BoardService {
         return mBoardMapper.fileDetail(bno);
     }
     
-    public void boardInsertService(BoardVO board) throws Exception {
-        mBoardMapper.boardInsert(board);
+    public int boardInsertService(BoardVO board) throws Exception {
+        return mBoardMapper.boardInsert(board);
     }
 
     public int fileInsertServcie(FileVO file) throws Exception {
         return mBoardMapper.fileInsert(file); 
     }
 
-    public void boardUpdateService(BoardVO board) throws Exception {
-        mBoardMapper.boardUpdate(board);
+    public int boardUpdateService(BoardVO board) throws Exception {
+        return mBoardMapper.boardUpdate(board);
     }
 
-    public void boardDeleteService(int bno) throws Exception {
-        mBoardMapper.boardDelete(bno); 
+    public int boardDeleteService(int bno) throws Exception {
+        return mBoardMapper.boardDelete(bno); 
     }
 
-    public void fileDeleteService(int bno) throws Exception {
-        mBoardMapper.fileDelete(bno); 
+    public int fileDeleteService(int bno) throws Exception {
+       return mBoardMapper.fileDelete(bno); 
     }
 }

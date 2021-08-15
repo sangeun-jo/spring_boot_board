@@ -5,7 +5,6 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.List;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -200,7 +199,7 @@ public class BoardController {
         
         //글 삭제 
         mBoardService.boardDeleteService(bno); 
-        
+
         //댓글 삭제 
         mCommentService.commentsDeleteService(bno); 
         return "redirect:/"; 

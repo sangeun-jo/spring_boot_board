@@ -36,17 +36,17 @@ public class CommentController {
 
     @RequestMapping("/update") //댓글 수정 
     @ResponseBody
-    private void mCommentServiceUpdate(@RequestParam int cno, @RequestParam String content) throws Exception {
+    private int mCommentServiceUpdate(@RequestParam int cno, @RequestParam String content) throws Exception {
         CommentVO comment = new CommentVO(); 
         comment.setCno(cno); 
         comment.setContent(content);
-        mCommentService.commentUpdateService(comment); 
+        return mCommentService.commentUpdateService(comment); 
     }
 
     @RequestMapping("/delete/{cno}") //댓글 삭제
     @ResponseBody
-    private void mCommentServiceDelete(@PathVariable int cno) throws Exception {
-        mCommentService.commentDeleteService(cno);
+    private int mCommentServiceDelete(@PathVariable int cno) throws Exception {
+       return mCommentService.commentDeleteService(cno);
     }
 
     
