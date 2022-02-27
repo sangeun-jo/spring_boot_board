@@ -7,9 +7,16 @@
 - DB: MariaDB 
 - 배포: heroku 
 
+### 프로젝트 구조 
+- maven build
+- Controller.java - Service.java - Mapper.java - Mapper.xml 구조 
+- Mybits를 사용함에 따라, DAO 클레스 대신 Mapper 클레스 사용
+
 #### 새로 배운것 
 1. 새로고침하지 않고 실시간으로 업데이트되는 덧글창(ajax 사용)
 2. 파일업로드 
+3. Spring Security
+4. DTO, VO, Entity 차이점 
 
 #### spring boot 게시판 만드는 중 만난 문제들
 
@@ -28,6 +35,7 @@ application.properties 에 에러 레벨을 설정하기
 물론 로그도 적극적으로 사용하자   
 
 [참고 사이트](https://private.tistory.com/51?category=753861)
+
 
 #### 개선점
 - 로그인 기능 추가 

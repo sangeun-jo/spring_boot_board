@@ -60,34 +60,6 @@ function commentUpdate(cno, content){
     
 }
  
-//댓글 등록
-function commentInsert(insertData){
-    $.ajax({
-        url : '/comment/insert',
-        type : 'post',
-        data : insertData,
-        success : function(data){
-            if(data == 1) {
-                commentList(); //댓글 작성 후 댓글 목록 reload
-                $('[name=content]').val('');
-            }
-        }
-    });
-}
- 
-//댓글 수정 - 댓글 내용 출력을 input 폼으로 변경 
-function commentUpdate(cno, content){
-    var a ='';
-    
-    a += '<div class="input-group">';
-    a += '<input type="text" class="form-control" name="content_'+cno+'" value="'+content+'"/>';
-    a += '<span class="input-group-btn"><button class="btn btn-default" type="button" onclick="commentUpdateProc('+cno+');">수정</button> </span>';
-    a += '</div>';
-    
-    $('.commentContent'+cno).html(a);
-    
-}
- 
 //댓글 수정
 function commentUpdateProc(cno){
     var updateContent = $('[name=content_'+cno+']').val();
@@ -113,14 +85,8 @@ function commentDelete(cno){
     });
 }
  
- 
- 
- 
 $(document).ready(function(){
     commentList(); //페이지 로딩시 댓글 목록 출력 
 });
- 
- 
- 
- 
 </script>
+

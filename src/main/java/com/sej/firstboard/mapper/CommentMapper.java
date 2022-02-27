@@ -2,7 +2,7 @@ package com.sej.firstboard.mapper;
 
 import java.util.List;
 
-import com.sej.firstboard.model.CommentVO;
+import com.sej.firstboard.model.CommentDTO;
 
 import org.springframework.stereotype.Repository;
 
@@ -12,13 +12,13 @@ public interface CommentMapper {
     public int commentCount() throws Exception;
 
     //댓글 목록
-    public List<CommentVO> commentList(int bno) throws Exception; 
+    public List<CommentDTO> commentList(int bno) throws Exception; 
 
     //댓글 작성
-    public int commentInsert(CommentVO comment) throws Exception; 
+    public int commentInsert(CommentDTO comment) throws Exception; 
 
     //댓글 수정
-    public int commentUpdate(CommentVO comment) throws Exception;
+    public int commentUpdate(CommentDTO comment) throws Exception;
 
     //개별 댓글 삭제
     public int commentDelete(int cno) throws Exception; 

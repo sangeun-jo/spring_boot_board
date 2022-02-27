@@ -1,11 +1,11 @@
 package com.sej.firstboard;
 
-import javax.annotation.Resource; 
+import javax.annotation.Resource;
+
+import com.sej.firstboard.mapper.BoardMapper;
 
 import org.springframework.stereotype.Controller; 
 import org.springframework.web.bind.annotation.RequestMapping; 
-
-import com.sej.firstboard.mapper.BoardMapper; 
 
 @Controller
 public class JspTest {

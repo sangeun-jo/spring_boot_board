@@ -61,13 +61,12 @@
     
     <div class="container">
         <div class="commentList"></div>
+        
     </div>
-
+    
 </div>
- 
- 
 </body>
 </html>
 
-<%@ include file="comment.jsp" %>
+<%@ include file="../comment.jsp" %>
 </layoutTag:layout>

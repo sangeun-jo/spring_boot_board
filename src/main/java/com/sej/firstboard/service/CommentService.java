@@ -5,7 +5,7 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import com.sej.firstboard.mapper.CommentMapper;
-import com.sej.firstboard.model.CommentVO;
+import com.sej.firstboard.model.CommentDTO;
 
 import org.springframework.stereotype.Service;
 
@@ -15,15 +15,15 @@ public class CommentService {
     @Resource(name="com.sej.firstboard.mapper.CommentMapper")
     CommentMapper mCommentMapper; 
     
-    public List<CommentVO> commentListService(int bno) throws Exception {
+    public List<CommentDTO> commentListService(int bno) throws Exception {
         return mCommentMapper.commentList(bno);
     } 
 
-    public int commentInsertService(CommentVO comment) throws Exception {
+    public int commentInsertService(CommentDTO comment) throws Exception {
         return mCommentMapper.commentInsert(comment); 
     }
 
-    public int commentUpdateService(CommentVO comment) throws Exception {
+    public int commentUpdateService(CommentDTO comment) throws Exception {
         return mCommentMapper.commentUpdate(comment); 
     }
 

@@ -4,7 +4,7 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
-import com.sej.firstboard.model.CommentVO;
+import com.sej.firstboard.model.CommentDTO;
 import com.sej.firstboard.service.CommentService;
 
 import org.springframework.stereotype.Controller;
@@ -21,14 +21,14 @@ public class CommentController {
 
     @RequestMapping("/list") //댓글 리스트 
     @ResponseBody
-    private List<CommentVO> mCommentServiceList(@RequestParam int bno) throws Exception {
+    private List<CommentDTO> mCommentServiceList(@RequestParam int bno) throws Exception {
         return mCommentService.commentListService(bno); 
     }
 
     @RequestMapping("/insert") //댓글 작성 
     @ResponseBody
     private int mCommentServiceInsert(@RequestParam int bno, @RequestParam String content) throws Exception{
-        CommentVO comment = new CommentVO(); 
+        CommentDTO comment = new CommentDTO(); 
         comment.setBno(bno); 
         comment.setContent(content);
         return mCommentService.commentInsertService(comment); 
@@ -37,7 +37,7 @@ public class CommentController {
     @RequestMapping("/update") //댓글 수정 
     @ResponseBody
     private int mCommentServiceUpdate(@RequestParam int cno, @RequestParam String content) throws Exception {
-        CommentVO comment = new CommentVO(); 
+        CommentDTO comment = new CommentDTO(); 
         comment.setCno(cno); 
         comment.setContent(content);
         return mCommentService.commentUpdateService(comment); 

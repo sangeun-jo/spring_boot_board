@@ -1,6 +1,6 @@
 package com.sej.firstboard.model;
 
-public class FileVO {
+public class FileDTO {
 
     private int fno;
     private int bno;

@@ -2,7 +2,7 @@ package com.sej.firstboard.model;
 
 import java.util.Date;
 
-public class CommentVO {
+public class CommentDTO {
     private int cno; 
     private int bno; 
     private String content; 

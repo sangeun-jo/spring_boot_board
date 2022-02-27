@@ -10,8 +10,8 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.sej.firstboard.model.BoardVO;
-import com.sej.firstboard.model.FileVO;
+import com.sej.firstboard.model.BoardDTO;
+import com.sej.firstboard.model.FileDTO;
 import com.sej.firstboard.service.BoardService;
 import com.sej.firstboard.service.CommentService;
 
@@ -33,34 +33,33 @@ public class BoardController {
     CommentService mCommentService; 
 
     //게시판 리스트 화면 호출 
-    @RequestMapping("/") 
+    @RequestMapping({"/", "/list"}) 
     private String boardList(Model model) throws Exception{
-
         model.addAttribute("list", mBoardService.boardListService()); 
-        return "list"; 
+        return "post/list"; 
     }
     
     @RequestMapping("/detail/{bno}")
     private String boardDetail(@PathVariable int bno, Model model) throws Exception {
         model.addAttribute("detail", mBoardService.boardDetailService(bno)); 
         model.addAttribute("files", mBoardService.fileDetailService(bno));
-        return "detail"; 
+        return "post/detail"; 
     }
 
     @RequestMapping("/fileDown/{bno}")
     private void fileDown(@PathVariable int bno, HttpServletRequest request, HttpServletResponse response) throws Exception{
         request.setCharacterEncoding("UTF-8");
-        FileVO fileVO = mBoardService.fileDetailService(bno);
+        FileDTO fileDTO = mBoardService.fileDetailService(bno);
         
         //파일 업로드된 경로 
         try{
-            String fileUrl = fileVO.getFileUrl();
+            String fileUrl = fileDTO.getFileUrl();
             fileUrl += "/";
             String savePath = fileUrl;
-            String fileName = fileVO.getFileName();
+            String fileName = fileDTO.getFileName();
             
             //실제 내보낼 파일명 
-            String oriFileName = fileVO.getFileOriName();
+            String oriFileName = fileDTO.getFileOriName();
             InputStream in = null;
             OutputStream os = null;
             File file = null;
@@ -116,24 +115,17 @@ public class BoardController {
         
     }
 
-
     //게시글 작성폼 호출 
     @RequestMapping("/insert") 
     private String boardInsertForm() {
-        return "insert"; 
+        return "post/insert"; 
     }
 
     @RequestMapping("/insertProc")
-    private String boardInsertProc(HttpServletRequest request, @RequestPart MultipartFile files) throws Exception {
-        BoardVO board = new BoardVO();
-        FileVO file = new FileVO();  
-
-        board.setSubject(request.getParameter("subject"));
-        board.setContent(request.getParameter("content")); 
-        board.setWriter(request.getParameter("writer"));
-
+    private String boardInsertProc(BoardDTO boardDTO, HttpServletRequest request, @RequestPart MultipartFile files) throws Exception {
+        FileDTO file = new FileDTO();  
         if (files.isEmpty()) { //업로드할 파일 없음
-            mBoardService.boardInsertService(board);
+            mBoardService.boardInsertService(boardDTO);
         } else {
             String fileName = files.getOriginalFilename(); 
             String fileNameExtension = FilenameUtils.getExtension(fileName).toLowerCase();
@@ -149,9 +141,9 @@ public class BoardController {
             destinationFile.getParentFile().mkdirs();
             files.transferTo(destinationFile);
 
-            mBoardService.boardInsertService(board);
+            mBoardService.boardInsertService(boardDTO);
 
-            file.setBno(board.getBno());
+            file.setBno(boardDTO.getBno());
             file.setFileName(destinationFileName);
             file.setFileOriName(fileName);
             file.setFileUrl(fileUrl);
@@ -159,7 +151,7 @@ public class BoardController {
             mBoardService.fileInsertServcie(file); 
         }
 
-        return "redirect:/detail/" + board.getBno(); 
+        return "redirect:/detail/" + boardDTO.getBno(); 
     }
 
     //게시글 수정폼 
@@ -167,20 +159,20 @@ public class BoardController {
     private String boardUpdateForm(@PathVariable int bno, Model model) throws Exception { 
         model.addAttribute("detail", mBoardService.boardDetailService(bno)); 
         model.addAttribute("files", mBoardService.fileDetailService(bno));
-        return "update"; 
+        return "post/update"; 
     }
 
     @RequestMapping("/updateProc")
-    private String boardUpdateProc(HttpServletRequest request) throws Exception {
-        BoardVO board = new BoardVO(); 
+    private String boardUpdateProc(BoardDTO oldBoard) throws Exception {
+        BoardDTO newBoard = new BoardDTO(); 
 
-        int bno = Integer.parseInt(request.getParameter("bno")); 
+        int bno = oldBoard.getBno();
+        
+        newBoard.setBno(bno);
+        newBoard.setSubject(oldBoard.getSubject());
+        newBoard.setContent(oldBoard.getContent());
 
-        board.setBno(bno);
-        board.setSubject(request.getParameter("subject"));
-        board.setContent(request.getParameter("content"));
-
-        mBoardService.boardUpdateService(board); 
+        mBoardService.boardUpdateService(newBoard); 
         
         return "redirect:/detail/" + bno; 
     }
@@ -190,7 +182,7 @@ public class BoardController {
     private String boardDelete(@PathVariable int bno) throws Exception{
         
         //파일 삭제 
-        FileVO fileDetail = mBoardService.fileDetailService(bno); 
+        FileDTO fileDetail = mBoardService.fileDetailService(bno); 
         if (fileDetail != null) { //파일이 존재 
             File file = new File(fileDetail.getFileUrl() + fileDetail.getFileName());
             file.delete();  //서버 파일 삭제 

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.sej.firstboard.mapper.UserMapper">
+    <insert id="signUp" parameterType="com.sej.firstboard.model.UserDTO">
+        INSERT INTO USER (ID, PASSWORD, USERNAME, AUTH, REG_DATE, PASS_CHANGE, ACTIVATE_YN)
+        VALUES(#{id}, #{password}, #{userName}, #{auth}, now(), #{passChange}, 1)
+    </insert>
+
+    <select id="findUserById" parameterType="string" resultType="com.sej.firstboard.model.UserVO">
+        SELECT * FROM USER WHERE ID = #{id}
+    </select>
+
+</mapper>

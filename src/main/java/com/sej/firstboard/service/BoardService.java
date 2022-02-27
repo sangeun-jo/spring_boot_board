@@ -5,8 +5,8 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import com.sej.firstboard.mapper.BoardMapper;
-import com.sej.firstboard.model.BoardVO;
-import com.sej.firstboard.model.FileVO;
+import com.sej.firstboard.model.BoardDTO;
+import com.sej.firstboard.model.FileDTO;
 
 import org.springframework.stereotype.Service;
 
@@ -15,27 +15,27 @@ public class BoardService {
     @Resource(name="com.sej.firstboard.mapper.BoardMapper")
     BoardMapper mBoardMapper; 
 
-    public List<BoardVO> boardListService() throws Exception {
+    public List<BoardDTO> boardListService() throws Exception {
         return mBoardMapper.boardList(); 
     }
 
-    public BoardVO boardDetailService(int bno) throws Exception {
+    public BoardDTO boardDetailService(int bno) throws Exception {
         return mBoardMapper.boardDetail(bno); 
     }
 
-    public FileVO fileDetailService(int bno) throws Exception{
+    public FileDTO fileDetailService(int bno) throws Exception{
         return mBoardMapper.fileDetail(bno);
     }
     
-    public int boardInsertService(BoardVO board) throws Exception {
+    public int boardInsertService(BoardDTO board) throws Exception {
         return mBoardMapper.boardInsert(board);
     }
 
-    public int fileInsertServcie(FileVO file) throws Exception {
+    public int fileInsertServcie(FileDTO file) throws Exception {
         return mBoardMapper.fileInsert(file); 
     }
 
-    public int boardUpdateService(BoardVO board) throws Exception {
+    public int boardUpdateService(BoardDTO board) throws Exception {
         return mBoardMapper.boardUpdate(board);
     }
 

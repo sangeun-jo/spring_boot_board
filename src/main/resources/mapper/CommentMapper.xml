@@ -8,16 +8,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         SELECT COUNT(*) FROM COMMENT
     </select>
 
-    <select id="commentList" resultType="com.sej.firstboard.model.CommentVO">
+    <select id="commentList" resultType="com.sej.firstboard.model.CommentDTO">
         SELECT * FROM COMMENT WHERE BNO = #{bno}
     </select>
 
-    <insert id="commentInsert" parameterType="com.sej.firstboard.model.CommentVO">
+    <insert id="commentInsert" parameterType="com.sej.firstboard.model.CommentDTO">
         INSERT INTO COMMENT (CNO, BNO, CONTENT, REG_DATE)
         VALUES(#{cno}, #{bno}, #{content}, now())
     </insert>
 
-    <update id="commentUpdate" parameterType="com.sej.firstboard.model.CommentVO">
+    <update id="commentUpdate" parameterType="com.sej.firstboard.model.CommentDTO">
         UPDATE COMMENT SET CONTENT = #{content} WHERE CNO = #{cno} 
     </update>
 

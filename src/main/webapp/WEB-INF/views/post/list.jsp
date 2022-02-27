@@ -16,8 +16,16 @@
  
 <div class="container">
     <div class="col-xs-12" style="margin:15px auto;">
-        <label style="font-size:20px;"><span class="glyphicon glyphicon-list-alt"></span>게시글 목록</label>
-        <button class="btn btn-primary btn-sm" style="float:right;" onclick="location.href='/insert'">글쓰기</button>
+        <label style="font-size:20px;"><span class="glyphicon glyphicon-list-alt" ></span>게시글 목록</label>
+        <!-- TODO: 로그인 상태에 따라 버튼 바꾸기 -->
+        <button class="btn btn-primary btn-sm" style="float:right;" onclick="location.href='/insert'">쓰기</button> 
+
+        <button class="btn btn-primary btn-sm" style="float:right;" onclick="location.href='/login'">로그인</button> 
+        <button class="btn btn-primary btn-sm" style="float:right;" onclick="location.href='/logout'">로그아웃</button> 
+
+        <!-- <button class="btn btn-primary btn-sm" style="float:right;" onclick="location.href='/insert'">글쓰기</button> -->
+
+
     </div>
     
     <div class="col-xs-12">

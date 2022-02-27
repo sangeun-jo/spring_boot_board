@@ -45,6 +45,7 @@
           </div>
           <input type="hidden" name="bno" value="${detail.bno}"/>
           <button type="submit" class="btn btn-primary btn-sm" style="float:right;">수정</button>
+          <input type='hidden' name='${_csrf.parameterName }' value='${_csrf.token }'> 
         </form>
     </div>
 </div>

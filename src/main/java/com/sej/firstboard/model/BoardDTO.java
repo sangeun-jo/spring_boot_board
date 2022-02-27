@@ -2,7 +2,7 @@ package com.sej.firstboard.model;
  
 import java.util.Date;
  
-public class BoardVO {
+public class BoardDTO {
     private int bno;
     private String subject;
     private String content;

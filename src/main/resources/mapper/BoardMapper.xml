@@ -8,28 +8,28 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         SELECT COUNT(*) FROM BOARD 
     </select>
 
-    <select id="boardList" resultType="com.sej.firstboard.model.BoardVO">
+    <select id="boardList" resultType="com.sej.firstboard.model.BoardDTO">
         SELECT * FROM BOARD
     </select>
 
-    <select id="boardDetail" parameterType="int" resultType="com.sej.firstboard.model.BoardVO">
+    <select id="boardDetail" parameterType="int" resultType="com.sej.firstboard.model.BoardDTO">
         SELECT * FROM BOARD WHERE BNO = #{bno}
     </select>
 
-    <select id="fileDetail" parameterType="int" resultType="com.sej.firstboard.model.FileVO">
+    <select id="fileDetail" parameterType="int" resultType="com.sej.firstboard.model.FileDTO">
         SELECT * FROM FILES WHERE BNO = #{bno}
     </select>
 
-    <insert id="boardInsert" parameterType="com.sej.firstboard.model.BoardVO" useGeneratedKeys="true" keyProperty="bno">
+    <insert id="boardInsert" parameterType="com.sej.firstboard.model.BoardDTO" useGeneratedKeys="true" keyProperty="bno">
         INSERT INTO BOARD (BNO, SUBJECT, CONTENT, WRITER, REG_DATE) 
         VALUES(#{bno}, #{subject}, #{content}, #{writer}, now())
     </insert>
 
-    <insert id="fileInsert" parameterType="com.sej.firstboard.model.FileVO">
+    <insert id="fileInsert" parameterType="com.sej.firstboard.model.FileDTO">
         INSERT INTO FILES (FNO, BNO, FILENAME, FILEORINAME, FILEURL) VALUES (#{fno}, #{bno}, #{fileName}, #{fileOriName}, #{fileUrl})
     </insert>
     
-    <update id="boardUpdate" parameterType="com.sej.firstboard.model.BoardVO">
+    <update id="boardUpdate" parameterType="com.sej.firstboard.model.BoardDTO">
         UPDATE BOARD SET 
             <if test="subject != null">
                 SUBJECT = #{subject}
