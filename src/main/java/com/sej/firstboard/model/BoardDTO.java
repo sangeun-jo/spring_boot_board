@@ -9,6 +9,7 @@ import lombok.Setter;
 @Setter
 public class BoardDTO {
     private int bno;
+    private int fno;
     private String subject;
     private String content;
     private String writer;

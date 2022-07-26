@@ -41,6 +41,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             WHERE BNO = #{bno}
     </update>
 
+    <update id="fileUpdate" parameterType="int">
+        update files SET 
+           fileName=${fileNmae}, 
+           fileOriName=#{fileOriName}, 
+           fileurl=#{fileurl}
+        where fno=#{fno}
+    </update>
+
     <delete id="boardDelete" parameterType="int">
         DELETE FROM board WHERE BNO = #{bno} 
     </delete>
@@ -93,4 +101,5 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             </trim>
         </where>
     </select>
+
 </mapper>

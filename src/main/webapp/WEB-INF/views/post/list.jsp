@@ -28,6 +28,7 @@
                 <th>Writer</th>
                 <th>View</th>
                 <th>Date</th>
+                <th>첨부파일</th>
             </tr>
               <c:forEach var="l" items="${list}">
                   <tr onclick="location.href='/detail/${l.bno}'"> 
@@ -37,6 +38,9 @@
                       <td>${l.view}</td>
                       <td>
                         <fmt:formatDate value="${l.reg_date}" pattern="yyyy/MM/dd"/>
+                    </td>
+                    <td>
+                        ${l.fno}
                     </td>
                   </tr>
               </c:forEach>

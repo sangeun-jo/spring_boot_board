@@ -31,7 +31,7 @@
               
               <dt>작성날짜</dt>
               <dd>
-                  <fmt:formatDate value="${detail.reg_date}" pattern="yyyy.MM.dd HH:mm:ss"/>
+                  <fmt:formatDate value="${detail.reg_date}" pattern="yyyy/MM/dd"/>
               </dd>
               
               <dt>첨부파일</dt>

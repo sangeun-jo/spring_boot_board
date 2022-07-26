@@ -1,12 +1,10 @@
 package com.sej.firstboard.controller;
 
-import java.io.Console;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.List;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -38,13 +36,7 @@ public class BoardController {
 
     @RequestMapping("/")
     private String main(Model model) throws Exception {
-        Criteria cri = new Criteria();
-        List<BoardDTO> list = mBoardService.getListWithPaging(cri); 
-        list.forEach(board -> log.info(board.getSubject()));
-        int total = mBoardService.getTotalCount(cri);
-        log.info("cnt:" +total);
         return "redirect:/list?pageNum=1&amount=5"; 
-        
     }
 
 
@@ -181,11 +173,52 @@ public class BoardController {
     }
 
     @RequestMapping("/updateProc")
-    private String boardUpdateProc(BoardDTO oldBoard) throws Exception {
-        BoardDTO newBoard = new BoardDTO(); 
-
-        int bno = oldBoard.getBno();
+    private String boardUpdateProc(BoardDTO oldBoard, HttpServletRequest request, @RequestPart MultipartFile files) throws Exception {
         
+        BoardDTO newBoard = new BoardDTO(); 
+        int bno = oldBoard.getBno();
+
+        if (files.isEmpty()) { //업로드할 파일 없음
+        } else { //업로드할 파일 있음 
+
+            String fileName = files.getOriginalFilename(); 
+            String fileNameExtension = FilenameUtils.getExtension(fileName).toLowerCase();
+            File destinationFile; 
+            String destinationFileName;  
+            String fileUrl = request.getServletContext().getRealPath("WEB-INF/uploadFiles/"); 
+
+            do {
+                destinationFileName = RandomStringUtils.randomAlphabetic(32) + "." + fileNameExtension; 
+                destinationFile = new File(fileUrl + destinationFileName); 
+            } while (destinationFile.exists()); 
+    
+            destinationFile.getParentFile().mkdirs();
+            files.transferTo(destinationFile);
+
+            FileDTO fileDTO = mBoardService.fileDetailService(bno);
+
+        
+            if (fileDTO != null) { //이전에 업로드한 파일이 있는 경우 
+               //TODO 있는 파일 삭제 
+
+                fileDTO.setFileName(destinationFileName);
+                fileDTO.setFileOriName(fileName);
+                fileDTO.setFileUrl(fileUrl);
+                
+                mBoardService.fileUPdateService(fileDTO.getFno());
+            } else {
+                FileDTO file = new FileDTO(); 
+
+                file.setBno(bno);
+                file.setFileName(destinationFileName);
+                file.setFileOriName(fileName);
+                file.setFileUrl(fileUrl);
+            
+                mBoardService.fileInsertServcie(file); 
+            }
+        }
+
+
         newBoard.setBno(bno);
         newBoard.setSubject(oldBoard.getSubject());
         newBoard.setContent(oldBoard.getContent());

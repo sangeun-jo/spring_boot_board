@@ -45,4 +45,6 @@ public interface BoardMapper {
     public List<BoardDTO> getListWithPaging(Criteria cri); 
 
     public int getTotalCount(Criteria cri);
+
+    public FileDTO fileUpdate(int fno);
 }

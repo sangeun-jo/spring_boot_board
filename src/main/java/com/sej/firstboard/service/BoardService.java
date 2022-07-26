@@ -61,4 +61,8 @@ public class BoardService {
     public int getTotalCount(Criteria cri) throws Exception {
         return mBoardMapper.getTotalCount(cri);
     }
+
+    public void fileUPdateService(int fno) {
+        mBoardMapper.fileUpdate(fno);
+    }
 }
