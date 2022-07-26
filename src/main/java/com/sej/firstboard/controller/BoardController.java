@@ -37,13 +37,13 @@ public class BoardController {
     BoardService mBoardService; 
 
     @RequestMapping("/")
-    private void main(Model model) throws Exception {
+    private String main(Model model) throws Exception {
         Criteria cri = new Criteria();
         List<BoardDTO> list = mBoardService.getListWithPaging(cri); 
         list.forEach(board -> log.info(board.getSubject()));
         int total = mBoardService.getTotalCount(cri);
         log.info("cnt:" +total);
-        //return "redirect:/list?page=1"; 
+        return "redirect:/list?pageNum=1&amount=5"; 
         
     }
 
@@ -51,14 +51,9 @@ public class BoardController {
     //게시판 리스트 화면 호출 
     @RequestMapping("/list") 
     private String boardList(Criteria cri, Model model) throws Exception{
-        List<BoardDTO> list = mBoardService.getListWithPaging(cri); 
-        int total = mBoardService.getTotalCount(cri);
-        log.info("cnt:" +total);
-        list.forEach(board -> log.info(board.getSubject()));
-
         model.addAttribute("list", mBoardService.getListWithPaging(cri));
-        model.addAttribute("pageMaker", new PageDTO(cri, 123));
-        log.info("=======================");
+        int total = mBoardService.getTotalCount(cri);
+        model.addAttribute("pageMaker", new PageDTO(cri, total));
         return "post/list"; 
     }
     

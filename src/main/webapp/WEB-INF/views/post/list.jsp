@@ -30,7 +30,7 @@
                 <th>Date</th>
             </tr>
               <c:forEach var="l" items="${list}">
-                  <tr onclick="location.href='/detail/${l.bno}'">
+                  <tr onclick="location.href='/detail/${l.bno}'"> 
                       <td>${l.bno}</td>
                       <td>${l.subject}</td>
                       <td>${l.writer}</td>
@@ -50,7 +50,8 @@
                         <option value="C">내용</option>
                     </select>
                     <input type="text" name="keyword">
-                    <input type="hidden" name="page" value="1">
+                    <input type="hidden" name="pageNum" value="${pageMaker.cri.pageNum}">
+                    <input type="hidden" name="amount" value="${pageMaker.cri.amount}">
                     <button class="btn btn-default">Search</button>
                 </form>
             </div>
@@ -59,6 +60,8 @@
         <form id="actionForm" action="/list" method="get">
             <input type="hidden" name="pageNum" value="${pageMaker.cri.pageNum}" >
             <input type="hidden" name="amount" value="${pageMaker.cri.amount}">
+            <input type="hidden" name="type" value="${pageMaker.cri.type}">
+            <input type="hidden" name="keyword" value="${pageMaker.cri.keyword}">
         </form>
 
         <div>
@@ -96,6 +99,20 @@
             e.preventDefault();
             actionForm.find("input[name='pageNum']").val($(this).attr("href"));
             actionForm.submit();
+        })
+
+        var searchForm = $('#searchForm');
+        $('#searchForm button').on("click", function(e) {
+            
+            if(!searchForm.find("input[name='keyword']").val()) {
+                alert("키워드를 입력하세요."); 
+                return false;
+            } 
+
+            searchForm.find("input[name='pageNum']").val("1"); 
+            e.preventDefault(); 
+
+            searchForm.submit();
         })
     })
  </script>
