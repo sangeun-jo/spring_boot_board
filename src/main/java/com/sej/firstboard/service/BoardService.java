@@ -6,8 +6,10 @@ import javax.annotation.Resource;
 
 import com.sej.firstboard.mapper.BoardMapper;
 import com.sej.firstboard.model.BoardDTO;
+import com.sej.firstboard.model.Criteria;
 import com.sej.firstboard.model.FileDTO;
 
+import org.springframework.boot.autoconfigure.web.ServerProperties.Tomcat.Mbeanregistry;
 import org.springframework.stereotype.Service;
 
 @Service("com.sej.firstboard.service.BoardService")
@@ -15,11 +17,12 @@ public class BoardService {
     @Resource(name="com.sej.firstboard.mapper.BoardMapper")
     BoardMapper mBoardMapper; 
 
-    public List<BoardDTO> boardListService() throws Exception {
+    public List<BoardDTO> boardListService() throws Exception { 
         return mBoardMapper.boardList(); 
     }
 
     public BoardDTO boardDetailService(int bno) throws Exception {
+        mBoardMapper.updateView(bno);
         return mBoardMapper.boardDetail(bno); 
     }
 
@@ -45,5 +48,17 @@ public class BoardService {
 
     public int fileDeleteService(int bno) throws Exception {
        return mBoardMapper.fileDelete(bno); 
+    }
+
+    public int updateViewService(int bno) throws Exception {
+        return mBoardMapper.updateView(bno); 
+    }
+
+    public List<BoardDTO>  getListWithPaging(Criteria cri) throws Exception {
+        return mBoardMapper.getListWithPaging(cri); 
+    }
+
+    public int getTotalCount(Criteria cri) throws Exception {
+        return mBoardMapper.getTotalCount(cri);
     }
 }

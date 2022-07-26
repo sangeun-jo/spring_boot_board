@@ -5,6 +5,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 import com.sej.firstboard.model.BoardDTO;
+import com.sej.firstboard.model.Criteria;
 import com.sej.firstboard.model.FileDTO; 
 
 
@@ -37,4 +38,11 @@ public interface BoardMapper {
     //파일 삭제
     public int fileDelete(int bno) throws Exception; 
 
+    //조회수 업데이트
+    public int updateView(int bno) throws Exception;
+
+    //페이징
+    public List<BoardDTO> getListWithPaging(Criteria cri); 
+
+    public int getTotalCount(Criteria cri);
 }

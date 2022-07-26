@@ -1,22 +1,27 @@
 package com.sej.firstboard.controller;
 
+import java.io.Console;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.List;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.sej.firstboard.model.BoardDTO;
+import com.sej.firstboard.model.Criteria;
 import com.sej.firstboard.model.FileDTO;
+import com.sej.firstboard.model.PageDTO;
 import com.sej.firstboard.service.BoardService;
-import com.sej.firstboard.service.CommentService;
 
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.RandomStringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,16 +31,34 @@ import org.springframework.web.multipart.MultipartFile;
 
 @Controller 
 public class BoardController {
+    private final Logger log = LoggerFactory.getLogger(this.getClass().getSimpleName());
+    
     @Resource(name="com.sej.firstboard.service.BoardService")
     BoardService mBoardService; 
 
-    @Resource(name="com.sej.firstboard.service.CommentService")
-    CommentService mCommentService; 
+    @RequestMapping("/")
+    private void main(Model model) throws Exception {
+        Criteria cri = new Criteria();
+        List<BoardDTO> list = mBoardService.getListWithPaging(cri); 
+        list.forEach(board -> log.info(board.getSubject()));
+        int total = mBoardService.getTotalCount(cri);
+        log.info("cnt:" +total);
+        //return "redirect:/list?page=1"; 
+        
+    }
+
 
     //게시판 리스트 화면 호출 
-    @RequestMapping({"/", "/list"}) 
-    private String boardList(Model model) throws Exception{
-        model.addAttribute("list", mBoardService.boardListService()); 
+    @RequestMapping("/list") 
+    private String boardList(Criteria cri, Model model) throws Exception{
+        List<BoardDTO> list = mBoardService.getListWithPaging(cri); 
+        int total = mBoardService.getTotalCount(cri);
+        log.info("cnt:" +total);
+        list.forEach(board -> log.info(board.getSubject()));
+
+        model.addAttribute("list", mBoardService.getListWithPaging(cri));
+        model.addAttribute("pageMaker", new PageDTO(cri, 123));
+        log.info("=======================");
         return "post/list"; 
     }
     
@@ -192,8 +215,6 @@ public class BoardController {
         //글 삭제 
         mBoardService.boardDeleteService(bno); 
 
-        //댓글 삭제 
-        mCommentService.commentsDeleteService(bno); 
         return "redirect:/"; 
     }
 

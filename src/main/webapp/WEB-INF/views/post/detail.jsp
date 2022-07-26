@@ -22,7 +22,10 @@
             <dl class="dl-horizontal">
               <dt>제목</dt>
               <dd>${detail.subject}</dd>
-              
+
+              <dt>조회수</dt>
+              <dd>${detail.view}</dd>
+
               <dt>작성자</dt>
               <dd>${detail.writer}</dd>
               
@@ -41,32 +44,12 @@
         <div class="btn-group btn-group-sm" role="group" style="float:right;">
           <button type="button" class="btn btn-default" onclick="location.href='/delete/${detail.bno}'">삭제</button>
           <button type="button" class="btn btn-default" onclick="location.href='/update/${detail.bno}'">수정</button>
-          <button type="button" class="btn btn-default" onclick="location.href='/'"> 목록 </button>
+          <button type="button" class="btn btn-default" onclick="location.href='/list?page=1'"> 목록 </button>
         </div>
     </div>
 
-    <!--  댓글  -->
-    <div class="container">
-        <label for="content">comment</label>
-        <form name="commentInsertForm">
-            <div class="input-group">
-               <input type="hidden" name="bno" value="${detail.bno}"/>
-               <input type="text" class="form-control" id="content" name="content" placeholder="내용을 입력하세요.">
-               <span class="input-group-btn">
-                    <button class="btn btn-default" type="button" name="commentInsertBtn">등록</button>
-               </span>
-              </div>
-        </form>
-    </div>
-    
-    <div class="container">
-        <div class="commentList"></div>
-        
-    </div>
-    
 </div>
 </body>
 </html>
 
-<%@ include file="../comment.jsp" %>
 </layoutTag:layout>

@@ -31,7 +31,7 @@
 
           <div class="form-group">
             <label for="writer">작성날짜</label><br>
-            <fmt:formatDate value="${detail.reg_date}" pattern="yyyy.MM.dd HH:mm:ss"/>
+            <fmt:formatDate value="${detail.reg_date}" pattern="yyyy/MM/dd"/>
           </div>
 
           <div class="form-group">
