@@ -40,7 +40,9 @@
                         <fmt:formatDate value="${l.reg_date}" pattern="yyyy/MM/dd"/>
                     </td>
                     <td>
-                        ${l.fno}
+                        <c:if test="${l.fno != 0}">
+                            <a href="/fileDown/${l.bno}">${l.fno}</a>
+                        </c:if>
                     </td>
                   </tr>
               </c:forEach>

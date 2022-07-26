@@ -81,9 +81,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </sql>
     
     <select id="getListWithPaging" resultType="com.sej.firstboard.model.BoardDTO">
-            select bno, subject, content, writer, reg_date, view
+            select bno, fno, subject, content, writer, reg_date, view
             from (
-                select @rownum := @rownum +1 as rnum, bno, subject, content, writer, reg_date, view from board, 
+                select @rownum := @rownum +1 as rnum, bno, fno, subject, content, writer, reg_date, view from 
+                (select board.bno, fno, subject, content, writer, reg_date, view from board left join files on board.bno = files.bno) B, 
                 (select @rownum :=0) A
                 <include refid="criteria"></include>
                 order by bno desc
