@@ -49,11 +49,15 @@ public class BoardController {
         return "post/list"; 
     }
     
-    @RequestMapping("/detail/{bno}")
-    private String boardDetail(@PathVariable int bno, Model model) throws Exception {
+    @RequestMapping("/detail")
+    private String boardDetail(HttpServletRequest request, Model model) throws Exception {
+        int bno = Integer.parseInt(request.getParameter("bno"));
+        int pageNum = Integer.parseInt(request.getParameter("pageNum")); 
+        log.info("페이지 번호:", pageNum);
         model.addAttribute("detail", mBoardService.boardDetailService(bno)); 
         model.addAttribute("files", mBoardService.fileDetailService(bno));
-        return "post/detail"; 
+        model.addAttribute("pageNum", pageNum);
+        return "post/view"; 
     }
 
     @RequestMapping("/fileDown/{bno}")
@@ -128,7 +132,7 @@ public class BoardController {
     //게시글 작성폼 호출 
     @RequestMapping("/insert") 
     private String boardInsertForm() {
-        return "post/insert"; 
+        return "post/write"; 
     }
 
     @RequestMapping("/insertProc")

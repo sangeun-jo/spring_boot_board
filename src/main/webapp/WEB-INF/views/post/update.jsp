@@ -34,12 +34,7 @@
             <fmt:formatDate value="${detail.reg_date}" pattern="yyyy/MM/dd"/>
           </div>
 
-          <!-- 
-          <div class="form-group">
-            <label for="file">첨부파일</label><br>
-            <a href="/fileDown/${files.bno}">${files.fileOriName}</a>
-          </div>
-        -->
+
         <div class="form-group">
           <label for="file">첨부파일</label>
           <input type="file" id="file" name="files">

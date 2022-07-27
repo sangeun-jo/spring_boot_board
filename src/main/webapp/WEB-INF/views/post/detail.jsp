@@ -31,7 +31,7 @@
               
               <dt>작성날짜</dt>
               <dd>
-                  <fmt:formatDate value="${detail.reg_date}" pattern="yyyy/MM/dd"/>
+                  <fmt:formatDate value="${detail.reg_date}" pattern="yyyy-MM-dd"/>
               </dd>
               
               <dt>첨부파일</dt>
@@ -44,7 +44,7 @@
         <div class="btn-group btn-group-sm" role="group" style="float:right;">
           <button type="button" class="btn btn-default" onclick="location.href='/delete/${detail.bno}'">삭제</button>
           <button type="button" class="btn btn-default" onclick="location.href='/update/${detail.bno}'">수정</button>
-          <button type="button" class="btn btn-default" onclick="location.href='/list?page=1'"> 목록 </button>
+          <button type="button" class="btn btn-default" onclick="location.href='/'"> 목록 </button>
         </div>
     </div>
 

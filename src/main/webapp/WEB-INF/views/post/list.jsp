@@ -2,113 +2,130 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<%@ taglib prefix="layoutTag" tagdir="/WEB-INF/tags"%>
-<layoutTag:layout>
- 
- 
+<%@ taglib prefix="layoutTag" tagdir="/WEB-INF/tags"%> 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>List</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="keywords" content="" >
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="format-detection" content="telephone=no">
+    <title>2016 굿모닝 경기 소통 크리에이터 공모전</title>
+    <link rel="stylesheet" type="text/css" href="css/general.css" >
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script type="text/javascript" src="js/jquery.scrollTo-min.js"></script>
+    <script src="js/layout.js"></script>
+    <!--[if IE]>
+    <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
 </head>
 <body>
- 
-<div class="container">
-    <div class="col-xs-12" style="margin:15px auto;">
-        <label style="font-size:20px;"><span class="glyphicon glyphicon-list-alt" ></span>게시글 목록</label>
-        <button class="btn btn-primary btn-sm" style="float:right;" onclick="location.href='/insert'">글쓰기</button>
-    </div>
-    
-    <div class="col-xs-12">
-        <table class="table table-hover">
-            <tr>
-                <th>No</th>
-                <th>Subject</th>
-                <th>Writer</th>
-                <th>View</th>
-                <th>Date</th>
-                <th>첨부파일</th>
-            </tr>
-              <c:forEach var="l" items="${list}">
-                  <tr onclick="location.href='/detail/${l.bno}'"> 
+<div id="wrap">
+     <!-- @ CONTAINER -->
+    <section id="container" class="sub  new">
+        <!-- @ CONTENTS -->
+        <div id="contents">
+            <!-- @ SUB TITLE AREA -->
+            <div class="sub-title-area">
+                <h2 class="tit">News & Info </h2>
+            </div>
+			<div class="btn_area">
+				<a onclick="location.href='/insert'" class="btn_blue_line">글쓰기</a>
+            </div>
+			<!-- 페이징 처리는 5개씩 해주세요-->
+            <table class="news_list">
+            <caption>News 리스트</caption>
+            <colgroup>
+                <col style="width: 10%">
+                <col style="width:auto">
+                <col style="width: 10%">
+                <col style="width: 10%">
+                <col style="width: 5%">
+                <col style="width: 8%">
+            </colgroup>
+            <thead>
+                <tr>
+                    <th scope="col">번호</th>
+                    <th scope="col">제목</th>
+                    <th scope="col">작성자</th>
+                    <th scope="col">등록일</th>
+                    <th scope="col">조회</th>
+                    <th scope="col">첨부</th>
+                </tr>
+            </thead>
+            <tbody>
+                <c:forEach var="l" items="${list}">
+                  <tr onclick="location.href='/detail?bno=${l.bno}&pageNum=${pageMaker.cri.pageNum}'"> 
                       <td>${l.bno}</td>
-                      <td>${l.subject}</td>
-                      <td>${l.writer}</td>
-                      <td>${l.view}</td>
+                      <td class="board_man">${l.subject}</td>
+                      <td class="board_date">${l.writer}</td>
                       <td>
-                        <fmt:formatDate value="${l.reg_date}" pattern="yyyy/MM/dd"/>
+                        <fmt:formatDate value="${l.reg_date}" pattern="yyyy-MM-dd"/>
                     </td>
-                    <td>
+                    <td class="board_read">${l.view}</td>
+                    <td class="board_file">
                         <c:if test="${l.fno != 0}">
-                            <a href="/fileDown/${l.bno}">${l.fno}</a>
+                            <span class="board_file">
+                                <image src="/images/sub/icon_file.png" href="/fileDown/${l.bno}"></a>
+                            </span>
                         </c:if>
                     </td>
                   </tr>
               </c:forEach>
-        </table>
+            
+            </table>
 
-        <div class="row">
-            <div class="col-lg-12">
+        
+            <div class="pagination" id="paginate_button">
+                <a class="prev end" href="${1}">첫 페이지</a> 
+                <a href="${pageMaker.cri.pageNum - 1}" class="prev">이전 페이지</a>
+                <c:forEach 
+                    var="num"
+                    begin="${pageMaker.startPage}"
+                    end="${pageMaker.endPage}">
+                    <a class="${pageMaker.cri.pageNum == num ? 'on':''}" href="${num}">${num}</a>
+                </c:forEach>
+                <a href="${pageMaker.cri.pageNum + 1}" class="next">다음 페이지</a>
+                <a class="next end" href="${pageMaker.realEnd}">마지막 페이지</a>
+            </div>     
+
+            <div class="find_wrap">
                 <form id="searchForm" action="/list" method="get">
                     <select name="type">
                         <option value="S">제목</option>
                         <option value="C">내용</option>
                     </select>
-                    <input type="text" name="keyword">
+                    <input type="text" name="keyword" placeholder="검색어 입력">
                     <input type="hidden" name="pageNum" value="${pageMaker.cri.pageNum}">
                     <input type="hidden" name="amount" value="${pageMaker.cri.amount}">
-                    <button class="btn btn-default">Search</button>
+                    <a class="btn_gray">검색</a>
                 </form>
             </div>
-        </div>
-
-        <form id="actionForm" action="/list" method="get">
-            <input type="hidden" name="pageNum" value="${pageMaker.cri.pageNum}" >
-            <input type="hidden" name="amount" value="${pageMaker.cri.amount}">
-            <input type="hidden" name="type" value="${pageMaker.cri.type}">
-            <input type="hidden" name="keyword" value="${pageMaker.cri.keyword}">
-        </form>
-
-        <div>
-            <ul class="pagination">
-                <c:if test="${pageMaker.prev}">
-                    <li class="paginate_button previous">
-                        <a href="${pageMaker.startPage - 1}">Previous</a>
-                    </li>
-                </c:if>
-
-                <c:forEach
-                    var="num"
-                    begin="${pageMaker.startPage}"
-                    end="${pageMaker.endPage}">
-                    <li class="paginate_button 
-                        ${pageMaker.cri.pageNum == num ? 'active':''}">
-                        <a href="${num}">${num}</a>
-                    </li>
-                </c:forEach>
-
-                <c:if test="${pageMaker.next}">
-                    <li class="paginate_button next">
-                        <a href="${pageMaker.endPage +1}">Next</a>
-                    </li>
-                </c:if>
-            </ul>
-        </div>
-    </div>
+    
+            <form id="actionForm" action="/list" method="get">
+                <input type="hidden" name="pageNum" value="${pageMaker.cri.pageNum}" >
+                <input type="hidden" name="amount" value="${pageMaker.cri.amount}">
+                <input type="hidden" name="type" value="${pageMaker.cri.type}">
+                <input type="hidden" name="keyword" value="${pageMaker.cri.keyword}">
+            </form>
+    
+        
+        <!-- CONTENTS @ -->
+    </section>
+    <!-- CONTAINER @ -->
 </div>
- 
- <script>
+<script>
     $(document).ready(function(){
         var actionForm = $("#actionForm");
-        $(".paginate_button a").on("click", function(e) {
+        $("#paginate_button a").on("click", function(e) {
             e.preventDefault();
             actionForm.find("input[name='pageNum']").val($(this).attr("href"));
             actionForm.submit();
         })
 
         var searchForm = $('#searchForm');
-        $('#searchForm button').on("click", function(e) {
+        $('#searchForm a').on("click", function(e) {
             
             if(!searchForm.find("input[name='keyword']").val()) {
                 alert("키워드를 입력하세요."); 
@@ -120,9 +137,8 @@
 
             searchForm.submit();
         })
+
     })
  </script>
 </body>
 </html>
- 
-</layoutTag:layout>
