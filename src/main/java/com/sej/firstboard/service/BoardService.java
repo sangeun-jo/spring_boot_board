@@ -35,7 +35,7 @@ public class BoardService {
     }
 
     public int fileInsertServcie(FileDTO file) throws Exception {
-        return mBoardMapper.fileInsert(file); 
+        return mBoardMapper.fileInsert(file);
     }
 
     public int boardUpdateService(BoardDTO board) throws Exception {
@@ -50,6 +50,10 @@ public class BoardService {
        return mBoardMapper.fileDelete(bno); 
     }
 
+    public void fileUpdateService(FileDTO file) throws Exception {
+        mBoardMapper.fileUpdate(file);
+    }
+
     public int updateViewService(int bno) throws Exception {
         return mBoardMapper.updateView(bno); 
     }
@@ -62,7 +66,7 @@ public class BoardService {
         return mBoardMapper.getTotalCount(cri);
     }
 
-    public void fileUPdateService(int fno) {
-        mBoardMapper.fileUpdate(fno);
+    public void fileUPdateService(FileDTO file) {
+        mBoardMapper.fileUpdate(file);
     }
 }

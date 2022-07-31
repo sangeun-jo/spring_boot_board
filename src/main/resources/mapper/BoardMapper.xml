@@ -38,14 +38,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="content != null">
                 CONTENT = #{content}
             </if>
+            , REG_DATE = now()
             WHERE BNO = #{bno}
     </update>
 
-    <update id="fileUpdate" parameterType="int">
+    <update id="fileUpdate" parameterType="com.sej.firstboard.model.FileDTO">
         update files SET 
-           fileName=${fileNmae}, 
+           fileName=#{fileName}, 
            fileOriName=#{fileOriName}, 
-           fileurl=#{fileurl}
+           fileUrl=#{fileUrl}
         where fno=#{fno}
     </update>
 
@@ -56,6 +57,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <delete id="fileDelete" parameterType="int">
         DELETE FROM files WHERE BNO = #{bno} 
     </delete>
+
 
     <update id="updateView" parameterType="int">
         update board set view = view + 1 where bno = #{bno}

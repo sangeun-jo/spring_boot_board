@@ -46,5 +46,5 @@ public interface BoardMapper {
 
     public int getTotalCount(Criteria cri);
 
-    public FileDTO fileUpdate(int fno);
+    public void fileUpdate(FileDTO file);
 }

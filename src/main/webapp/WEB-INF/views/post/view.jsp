@@ -46,8 +46,8 @@
     
                 <div class="btn_area">
                     <a href="/list?pageNum=${pageNum}" class="btn_blue">목록</a>
-                    <button type="button" class="btn_blue" onclick="location.href='/update/${detail.bno}'">수정</button> 
-                    <button type="button" class="btn_blue" onclick="location.href='/delete/${detail.bno}'">삭제</button> 
+                    <button type="button" class="btn_blue" onclick="location.href='/update?bno=${detail.bno}&pageNum=${pageNum}'">수정</button> 
+                    <button type="button" class="btn_blue" onclick="location.href='/delete?bno=${detail.bno}&pageNum=${pageNum}'">삭제</button> 
                 </div>
             </div>
             <!-- CONTENTS @ -->

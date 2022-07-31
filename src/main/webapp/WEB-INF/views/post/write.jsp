@@ -9,7 +9,7 @@
     <meta name="keywords" content="" >
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="format-detection" content="telephone=no">
-    <title>2016 굿모닝 경기 소통 크리에이터 공모전</title>
+    <title>게시글 쓰기</title>
     <link rel="stylesheet" type="text/css" href="/css/general.css" >
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script type="text/javascript" src="/js/jquery.scrollTo-min.js"></script>
@@ -61,7 +61,7 @@
                    
                 <div class="btn_area">
 					<button type="submit" class="btn_blue">확인</button> 
-					<a href="#" class="btn_blue_line">취소</a><!-- 목록으로 가기 -->
+					<a href="/" class="btn_blue_line">취소</a><!-- 목록으로 가기 -->
                 </div>
             </form>         
         </div>
@@ -70,3 +70,4 @@
     <!-- CONTAINER @ -->
 </div>
 </body>
+</html>

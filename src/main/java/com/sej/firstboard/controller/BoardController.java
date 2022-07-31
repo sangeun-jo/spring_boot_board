@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.Date;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -39,6 +40,22 @@ public class BoardController {
         return "redirect:/list?pageNum=1&amount=5"; 
     }
 
+    @RequestMapping("/test/board")
+    public void boardTest() throws Exception{
+
+        for(int i=0;i<1000;i++) {
+            BoardDTO board = new BoardDTO();
+            board.setSubject("테스트 게시글 " + i);
+            board.setContent("본문 테스트 입니다.");
+            board.setReg_date(new Date());
+            board.setWriter("관리자");
+            board.setView(0);
+            mBoardService.boardInsertService(board);
+            log.info("게시글 " + i +"개 삽입됨 ");
+        }
+        
+    }
+
 
     //게시판 리스트 화면 호출 
     @RequestMapping("/list") 
@@ -53,7 +70,6 @@ public class BoardController {
     private String boardDetail(HttpServletRequest request, Model model) throws Exception {
         int bno = Integer.parseInt(request.getParameter("bno"));
         int pageNum = Integer.parseInt(request.getParameter("pageNum")); 
-        log.info("페이지 번호:", pageNum);
         model.addAttribute("detail", mBoardService.boardDetailService(bno)); 
         model.addAttribute("files", mBoardService.fileDetailService(bno));
         model.addAttribute("pageNum", pageNum);
@@ -165,21 +181,22 @@ public class BoardController {
             mBoardService.fileInsertServcie(file); 
         }
 
-        return "redirect:/detail/" + boardDTO.getBno(); 
+        return "redirect:/detail?bno=" + boardDTO.getBno() +"&pageNum=1"; 
     }
 
     //게시글 수정폼 
-    @RequestMapping("/update/{bno}")
-    private String boardUpdateForm(@PathVariable int bno, Model model) throws Exception { 
+    @RequestMapping("/update")
+    private String boardUpdateForm(HttpServletRequest request, Model model) throws Exception { 
+        int bno = Integer.parseInt(request.getParameter("bno"));
+        int pageNum = Integer.parseInt(request.getParameter("pageNum"));
         model.addAttribute("detail", mBoardService.boardDetailService(bno)); 
         model.addAttribute("files", mBoardService.fileDetailService(bno));
+        model.addAttribute("pageNum", pageNum);
         return "post/update"; 
     }
 
     @RequestMapping("/updateProc")
     private String boardUpdateProc(BoardDTO oldBoard, HttpServletRequest request, @RequestPart MultipartFile files) throws Exception {
-        
-        BoardDTO newBoard = new BoardDTO(); 
         int bno = oldBoard.getBno();
 
         if (files.isEmpty()) { //업로드할 파일 없음
@@ -209,8 +226,8 @@ public class BoardController {
                 fileDTO.setFileOriName(fileName);
                 fileDTO.setFileUrl(fileUrl);
                 
-                mBoardService.fileUPdateService(fileDTO.getFno());
-            } else {
+                mBoardService.fileUPdateService(fileDTO);
+            } else { //이전에 업ㄹ드한 파일이 없는 경우 
                 FileDTO file = new FileDTO(); 
 
                 file.setBno(bno);
@@ -218,23 +235,24 @@ public class BoardController {
                 file.setFileOriName(fileName);
                 file.setFileUrl(fileUrl);
             
-                mBoardService.fileInsertServcie(file); 
+                mBoardService.fileInsertServcie(file);
             }
         }
 
+        oldBoard.setSubject(oldBoard.getSubject());
+        oldBoard.setWriter(oldBoard.getWriter());
+        oldBoard.setContent(oldBoard.getContent());
 
-        newBoard.setBno(bno);
-        newBoard.setSubject(oldBoard.getSubject());
-        newBoard.setContent(oldBoard.getContent());
-
-        mBoardService.boardUpdateService(newBoard); 
+        mBoardService.boardUpdateService(oldBoard); 
         
-        return "redirect:/detail/" + bno; 
+        return "redirect:/detail?bno=" + bno  + "&pageNum=" + request.getParameter("pageNum"); 
     }
 
     //게시글 삭제 
-    @RequestMapping("/delete/{bno}")
-    private String boardDelete(@PathVariable int bno) throws Exception{
+    @RequestMapping("/delete")
+    private String boardDelete(HttpServletRequest request) throws Exception{
+        int bno = Integer.parseInt(request.getParameter("bno"));
+        int pageNum =  Integer.parseInt(request.getParameter("pageNum")); 
         
         //파일 삭제 
         FileDTO fileDetail = mBoardService.fileDetailService(bno); 
@@ -247,7 +265,7 @@ public class BoardController {
         //글 삭제 
         mBoardService.boardDeleteService(bno); 
 
-        return "redirect:/"; 
+        return "redirect:/list?pageNum=" + pageNum; 
     }
 
 }
